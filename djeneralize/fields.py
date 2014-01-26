@@ -59,3 +59,12 @@ class SpecializedReverseSingleRelatedObjectDescriptor(
             return related_object
 
 #}
+
+# allow South to handle these fields smoothly
+# Because SpecializedForeignKey inherits from ForeignKey and does not add any new
+# arguments, no special introspection rules are needed.
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules(rules=[], patterns=['^djeneralize\.fields\.SpecializedForeignKey'])
+except ImportError:
+    pass
